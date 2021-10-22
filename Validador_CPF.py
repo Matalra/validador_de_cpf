@@ -3,43 +3,48 @@ def get_cpf():
     print()
     return cpf
 
+
+# Retira dois ultimos números do CPF e verifica por caracteres invalidos
 def prepare_cpf(cpf):
+    if len(cpf) != 11:
+            print(f'O CPF foi digitado incorretamente, verifique a quantidade de números e tente novamente...')
+            validador_de_cpf()
     for i in cpf:
         if not i.isnumeric():
-            print(f'"{i}" Não é número')
+            print(f'"{i}" Não é número, digite o CPF novamente, por favor...')
             validador_de_cpf()
     cpf_sliced = cpf[0:-2]
     return cpf_sliced
 
+
+# Calcula o penultimo e ultimo digito do cpf nessa ordem e os adiciona
 def creat_digits(total):
     conta = 11 - (total % 11)
     resultado = 0 if conta > 9 else conta
     return resultado
 
+
+# Gera o valor a ser calculado por creat_digits
 def get_digits(pre_worked_cpf):
     multiply = len(pre_worked_cpf) + 1
     total = 0
 
-    for num in pre_worked_cpf:
-        total += int(num) * multiply
-        multiply -= 1
+    for num, multiplier in enumerate(range(multiply,1,-1)):
+        total += int(pre_worked_cpf[num]) * multiplier
+
     return creat_digits(total)
 
+
 def validador_de_cpf():
-    # Pega valor de um input do usuario
     cpf = get_cpf()
-    
-    # Retira os dois ultimos números do CPF e verifica se há
-    # caracteres invalidos
     worked_cpf = prepare_cpf(cpf)
 
     while len(worked_cpf) != len(cpf):
-        # Calcula o penultimo e ultimo digito do cpf nessa ordem e os adiciona
-        # ao cpf já trabalhado
         digito = get_digits(worked_cpf)
         worked_cpf += str(digito)
 
     print(f"O CPF {cpf} é valido!" if cpf == worked_cpf else f"O CPF {cpf} invalido")
+
 
 ###################################################
 
