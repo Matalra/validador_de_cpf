@@ -7,12 +7,16 @@ def get_cpf():
 # Retira dois ultimos números do CPF e verifica por caracteres invalidos
 def prepare_cpf(cpf):
     if len(cpf) != 11:
-            print(f'O CPF foi digitado incorretamente, verifique a quantidade de números e tente novamente...')
+            print(f'O CPF foi digitado incorretamente, verifique os números e tente novamente...')
             validador_de_cpf()
     for i in cpf:
         if not i.isnumeric():
             print(f'"{i}" Não é número, digite o CPF novamente, por favor...')
             validador_de_cpf()
+    if not int(cpf):
+        print(f'O CPF foi digitado incorretamente, verifique os números e tente novamente...')
+        validador_de_cpf()
+    
     cpf_sliced = cpf[0:-2]
     return cpf_sliced
 
